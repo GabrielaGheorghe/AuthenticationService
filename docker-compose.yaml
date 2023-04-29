@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  auth-service:
+    build: .
+    ports:
+      - "8083:8083"
+    volumes:
+      - .:/var
+    restart: always
+    depends_on:
+      - authdb
+    environment:
+      - spring.datasource.url=jdbc:postgresql://authdb:5432/auth
+      - spring.datasource.username=postgres
+      - spring.datasource.password=4224
+      - spring.jpa.hibernate.ddl-auto=none
+    links:
+      - authdb
+
+  authdb:
+    container_name: pg_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 4224
+      POSTGRES_DB: auth
+    ports:
+      - "5432:5432"
