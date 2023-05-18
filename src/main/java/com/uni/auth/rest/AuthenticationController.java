@@ -5,6 +5,7 @@ import com.uni.auth.DTOs.RegistrationDTO;
 import com.uni.auth.DTOs.ResponseRegisterDTO;
 import com.uni.auth.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

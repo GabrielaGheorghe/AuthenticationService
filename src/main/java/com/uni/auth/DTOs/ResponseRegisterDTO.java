@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class ResponseRegisterDTO {
 
     private String token;
-
+    private Long idUser;
 }

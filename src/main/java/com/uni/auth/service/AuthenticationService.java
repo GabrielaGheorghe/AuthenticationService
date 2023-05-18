@@ -7,6 +7,7 @@ import com.uni.auth.domain.Role;
 import com.uni.auth.domain.Users;
 import com.uni.auth.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 
 import static java.lang.Long.parseLong;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -32,6 +34,7 @@ public class AuthenticationService {
     public ResponseRegisterDTO register(RegistrationDTO request) {
         var registerUser = usersRepository.findByEmail(request.getEmail());
         Users user = null;
+        Users userAdded = null;
         if (registerUser.isEmpty()) {
             user = Users.builder()
                     .firstName(request.getFirstname())
@@ -40,11 +43,12 @@ public class AuthenticationService {
                     .password(passwordEncoder.encode(request.getPassword()))
                     .role(Role.USER)
                     .build();
-            usersRepository.save(user);
+            userAdded = usersRepository.save(user);
         }
         var jwtToken = jwtService.generateToken(new HashMap<>(), user);
         return ResponseRegisterDTO.builder()
                 .token(jwtToken)
+                .idUser(userAdded.getIdUser())
                 .build();
     }
 
