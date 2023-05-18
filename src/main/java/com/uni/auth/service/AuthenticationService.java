@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 import static java.lang.Long.parseLong;
 
@@ -68,6 +69,7 @@ public class AuthenticationService {
     }
 
     public Long getUserId(String token) {
-        return parseLong(jwtService.extractId(token));
+        Optional<Users> user = usersRepository.findByEmail(jwtService.extractUsername(token));
+        return user.get().getIdUser();
     }
 }

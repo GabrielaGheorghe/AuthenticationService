@@ -3,6 +3,7 @@ package com.uni.auth.rest;
 import com.uni.auth.DTOs.AuthenticationDTO;
 import com.uni.auth.DTOs.RegistrationDTO;
 import com.uni.auth.DTOs.ResponseRegisterDTO;
+import com.uni.auth.DTOs.TokenDTO;
 import com.uni.auth.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/check-token")
-    public Long getUserId(@RequestBody String token) {
-        return authenticationService.getUserId(token);
+    public Long getUserId(@RequestBody TokenDTO token) {
+        return authenticationService.getUserId(token.getToken());
     }
 }
